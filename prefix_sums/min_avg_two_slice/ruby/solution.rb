@@ -15,15 +15,8 @@ def solution(a)
     span = head - tail + 1
     sum = sums[head] - sums[tail] + a[tail]
 
-    if head < a.length - 1
-      nextHeadSum = sum + a[head + 1]
-      nextHeadAvg = nextHeadSum.fdiv(span + 1)
-    end
-
-    if tail < head - 1
-      nextTailSum = sum - a[tail]
-      nextTailAvg = nextTailSum.fdiv(span - 1)
-    end
+    nextHeadAvg = (sum + a[head + 1]).fdiv(span + 1) if head < a.length - 1
+    nextTailAvg = (sum - a[tail]).fdiv(span - 1) if tail < head - 1
 
     if nextHeadAvg < minAvg
       head += 1
