@@ -9,14 +9,16 @@ def solution(a)
   tails = a.each_with_index.reduce([]) { |s, e| s.push(e[1] + e[0]) }.sort
 
   pairs = 0
-  j = 0
+  head_index = 0
 
-  tails.each_with_index do |tail, i|
-    # Eliminate heads greater than current tail
-    j += 1 while j < a.length && heads[j] <= tail
+  tails.each_with_index do |tail, tail_index|
+    # Find first head greater than current tail
+    while head_index < heads.size && heads[head_index] <= tail do
+      head_index += 1
+    end
 
     # Add remaining segments to pairs (minus current segment)
-    pairs += j - i - 1
+    pairs += head_index - tail_index - 1
   end
 
   # Return -1 if pairs greater than 10,000,000 because Codility
