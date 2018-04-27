@@ -22,7 +22,7 @@ def solution(a)
   end
   blocks = blocks.keys
 
-  # Test the peaks array against all the block sizes
+  # Test the peaks array against all theto block sizes
   for k in blocks do
     every_k = true
     (0...peaks.length).step(k) do |p|
