@@ -3,20 +3,22 @@
 # Count the minimum number of jumps required for a frog to get
 # to the other side of a river.
 
-def fibonacci(n)
+# We're only allowed to jump a fibonacci number of positions
+def fib_jumps(n)
   fibs = [1, 1]
   while fibs[-2] + fibs[-1] <= n do
     fibs.push(fibs[-2] + fibs[-1])
   end
-  fibs[1..-1].reverse
+  fibs[1..-1]
 end
 
 def solution(a)
   bank = a.length
-  jumps = fibonacci(bank + 1)
+  jumps = fib_jumps(bank + 1)
   queue = [[-1, 0]]
   visited = [1000] * bank
 
+  # BFS possible jumps to find shortest path
   while !queue.empty? do
     node = queue.shift
     position = node[0]

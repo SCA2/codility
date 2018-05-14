@@ -1,17 +1,17 @@
 require_relative('../../../test_helper')
 require_relative('solution')
 
-describe 'fibonacci' do
+describe 'fib_jumps' do
   it 'calculates array of fibonacci numbers' do
-    fibonacci(2).must_equal([2, 1])
+    fib_jumps(2).must_equal([1, 2])
   end
 
-  it 'calculates nth fibonacci number' do
-    fibonacci(8).must_equal([8, 5, 3, 2, 1])
+  it 'calculates array of fibonacci numbers' do
+    fib_jumps(8).must_equal([1, 2, 3, 5, 8])
   end
 
-  it 'calculates nth fibonacci number' do
-    fibonacci(10).must_equal([8, 5, 3, 2, 1])
+  it 'calculates array of fibonacci numbers' do
+    fib_jumps(10).must_equal([1, 2, 3, 5, 8])
   end
 end
 
