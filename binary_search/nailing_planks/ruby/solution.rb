@@ -5,8 +5,7 @@
 def solution(a, b, c)
   planks = a.zip(b)
   nails = c.each_with_index.sort
-  first_nail = nails.length
-  last_nail = 0
+  last_nail = -1
   # puts "planks: #{planks}"
   # puts "nails: #{nails}"
 
@@ -24,12 +23,10 @@ def solution(a, b, c)
     return -1 if nail.nil?
 
     first_nail = nail[1]
-    nail[1].downto 0 do |i|
-      break if nails[i][0] < plank[0]
-      # puts "#{i}"
-      first_nail = [first_nail, nails[i][1]].min
-    end
-    last_nail = [last_nail, first_nail].max
+    min = nails.bsearch { |n| n[0] >= plank[0] }
+    first_nail = first_nail < min[1] ? first_nail : min[1]
+    # puts "plank: #{plank}, nail: #{nail}, min: #{min}"
+    last_nail = last_nail > first_nail ? last_nail : first_nail
 
   end
 
