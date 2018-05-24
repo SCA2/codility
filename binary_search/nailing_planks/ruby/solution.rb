@@ -5,48 +5,41 @@
 def solution(a, b, c)
   planks = a.zip(b).sort
   nails = c.each_with_index.sort
-  max_index = -1
-  # puts "planks: #{planks}"
-  # puts "nails: #{nails}"
 
+  max_order = -1
+  nails_index = 0
   last_plank = nil
   planks.each do |plank|
-    nail_1 = [*nails.each_with_index].bsearch do |n, i|
-      if n[0] > plank[1]
-        -1
-      elsif n[0] >= plank[0] && n[0] <= plank[1]
-        0
-      else
-        1
-      end
+    # If the current plank starts at the same position as last_plank,
+    # we've already found the leftmost nail for the current plank
+    next if !last_plank.nil? && last_plank[0] == plank[0]
+
+    # Find the leftmost nail that will nail the plank.
+    # Note that we start from nails_index, not 0
+    index = nails[nails_index..-1].find_index do |n|
+      n[0] >= plank[0] && n[0] <= plank[1]
     end
 
-    return -1 if nail_1.nil?
-
-    nail_2 = [*nails.each_with_index].bsearch do |n, i|
-      n[0] >= plank[0]
+    if index.nil?
+      # Can't find a suitable nail, so return -1
+      return -1
+    else
+      # Advance nails_index so we don't start from 0 next time
+      nails_index += index
     end
 
-    # puts "nail_1: #{nail_1}, nail_2: #{nail_2}"
-
-    nail = nail_1[0][0] < nail_2[0][0] ? nail_1 : nail_2
-
-    nail_index = nail[1]
-
-    next if last_plank && last_plank[0] == plank[0]
-    # puts "plank: #{plank}, nail: #{nails[nail_index]}"
-
-    min_index = nails[nail_index][1]
-    nails[nail_index..-1].each do |nail|
-      break if nail[0] < plank[0] || nail[0] > plank[1]
-      # puts "nail: #{nail}"
-      min_index = nail[1] < min_index ? nail[1] : min_index
-      break if min_index <= max_index
+    # Check for any earlier-appearing nails that can also nail the plank
+    min_order = nails[nails_index][1]
+    nails[nails_index..-1].each do |n|
+      break if n[0] < plank[0] || n[0] > plank[1]
+      min_order = n[1] < min_order ? n[1] : min_order
+      # Quit if this nail won't help the final answer
+      break if min_order <= max_order
     end
-    max_index = max_index > min_index ? max_index : min_index
+    max_order = min_order > max_order ? min_order : max_order
 
     last_plank = plank
   end
 
-  return max_index + 1
+  return max_order + 1
 end
