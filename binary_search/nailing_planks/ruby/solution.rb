@@ -1,6 +1,6 @@
 # Codility Lesson 14 - Binary Search Algorithm
 # NailingPlanks
-# Count the minimum number of nails that allow a series of planks to be nailed.
+# Pick the fewest successive nails that can nail a series of planks.
 
 def solution(a, b, c)
   planks = a.zip(b).sort
@@ -16,17 +16,15 @@ def solution(a, b, c)
 
     # Find the leftmost nail that will nail the plank.
     # Note that we start from nails_index, not 0
-    index = nails[nails_index..-1].find_index do |n|
+    temp_index = nails[nails_index..-1].find_index do |n|
       n[0] >= plank[0] && n[0] <= plank[1]
     end
+    
+    # Return -1 if we can't find a suitable nail
+    return -1 if temp_index.nil?
 
-    if index.nil?
-      # Can't find a suitable nail, so return -1
-      return -1
-    else
-      # Advance nails_index so we don't start from 0 next time
-      nails_index += index
-    end
+    # Advance nails_index so we don't start from 0 next time
+    nails_index += temp_index
 
     # Check for any earlier-appearing nails that can also nail the plank
     min_order = nails[nails_index][1]
