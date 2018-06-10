@@ -1,5 +1,5 @@
 # Codility Lesson 15 - Caterpillar Method
-# CountTriangles
+# AbsDistinct
 # Return the absolute distinct count of array A.
 
 def solution(a)
