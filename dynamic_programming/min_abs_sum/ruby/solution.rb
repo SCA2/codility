@@ -11,14 +11,13 @@ def solution(a)
   a.each { |i| count[i] += 1 }
 
   dp = [0] + [-1] * sum
-  for a in 1..max do
-    if count[a] > 0
-      for j in 0...sum do
-        if dp[j] >= 0
-          dp[j] = count[a]
-        elsif j >= a and dp[j - a] > 0
-          dp[j] = dp[j - a] - 1
-        end
+  for i in 1..max do
+    next if count[i] == 0
+    sum.times do |j|
+      if dp[j] >= 0
+        dp[j] = count[i]
+      elsif j >= i and dp[j - i] > 0
+        dp[j] = dp[j - i] - 1
       end
     end
   end
