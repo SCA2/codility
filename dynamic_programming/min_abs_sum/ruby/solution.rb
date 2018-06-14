@@ -3,14 +3,14 @@
 # Given array of integers, find the lowest absolute sum of elements.
 
 def solution(a)
-  a.map! {|i| i.abs }
-  max = a.max
-  sum = a.reduce(:+)
-  dp = [0] + [-1] * sum
+  a.map! { |i| i.abs }
+  max = a.max || 0
+  sum = a.reduce(:+) || 0
 
   count = [0] * (max + 1)
-  a.each {|i| count[i] += 1 }
+  a.each { |i| count[i] += 1 }
 
+  dp = [0] + [-1] * sum
   for a in 1..max do
     if count[a] > 0
       for j in 0...sum do
@@ -25,8 +25,7 @@ def solution(a)
 
   result = sum
   (sum / 2 + 1).times do |i|
-    result = [result, sum - 2 * i].min if dp[i] == 1
+    result = [result, sum - 2 * i].min if dp[i] >= 0
   end
-
-  result
+  return result
 end

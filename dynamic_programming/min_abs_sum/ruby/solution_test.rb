@@ -11,4 +11,14 @@ describe 'solution' do
     a = [1, 5, 2, -2]
     solution(a).must_equal(0)
   end
+
+  it 'finds the minimum absolute sum of a' do
+    a = []
+    solution(a).must_equal(0)
+  end
+
+  it 'finds the minimum absolute sum of a' do
+    a = [1]
+    solution(a).must_equal(1)
+  end
 end
